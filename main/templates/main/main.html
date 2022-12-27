@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- 문구 -->
+<div class="row">
+	<div class="col-sm-12 col-md-4 mr-0 ml-0" style="background-color:#acacac; height: 1px; flex: 1; margin:25px;"></div>
+	<div class="col-sm-12 col-md-4" style="text-align:center;">
+		<span style="font-family:맑은 고딕; font-weight:bold; font-size:32px;text-overflow:ellipsis;display:block;white-space:nowrap;overflow:hidden">국내 차량탁송 전문업체 </span>
+	</div>
+	<div class="col-sm-12 col-md-4 mr-0 ml-0" style="background-color:#acacac; height: 1px; flex: 1; margin:25px;"></div>
+</div>
+
+<!-- 공지 사항 & 상담 요청 영역 -->
+<div class="row mt-3">
+	<!-- 공지 사항 영역 -->
+	<div class="col-sm-12 col-md-6 mt-2" style="font-family:맑은 고딕;">
+		<div class="row" style="font-size-12;">
+			<div class="col-sm-9 col-md-9 pl-0" style="text-align:left;font-weight:bold;">
+				<i class="bi bi-pin-angle-fill"></i>&nbsp공지사항
+			</div>
+			<div class="col-sm-3 col-md-3" style="text-align:middle;">
+				<a href="{% url 'info:list' %}" style="color:#0067a3;">
+					More
+					<i class="bi bi-arrow-right-square-fill" style="color:#0067a3"></i>
+				</a>
+			</div>
+		</div>
+		{% for info in data_info %}
+		<div class="row mt-1" style="font-size-10;">
+			<div class="col-sm-9 pl-0" style="text-overflow:ellipsis;display:block;white-space:nowrap;overflow:hidden;">
+				<i class="bi bi-file-text"></i>
+				<a href="{% url 'info:detail' pk=info.id %}" style="color:black;">{{ info.title }}</a>
+			</div>
+			<div class="col-sm-3" style="text-overflow:ellipsis;display:block;white-space:nowrap;overflow:hidden;">
+				{{ info.created|date:'Y-m-d' }}
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+
+	<!-- 빠른 상담 요청 영역 -->
+	<div class="col-sm-12 col-md-6 mt-2" style="font-family:맑은 고딕;">
+		<div class="row" style="font-size:12; font-weight:bold">
+			<i class="bi bi-pin-angle-fill"></i>&nbsp빠른상담요청
+		</div>
+		<!-- 폼전송 -->
+		<form>
+			<div class="row input-group mt-2" style="font-size:12;">
+				<div class="input-group-prepend">
+					<span class="input-group-text" id="name">
+						<i class="bi bi-person-fill"></i>
+					</span>
+				</div>
+				<input type="text" class="form-control" placeholder="성명" aria-describedby="name">
+			</div>
+			<div class="row input-group mt-2" style="font-size:12;">
+			  <div class="input-group-prepend">
+				<span class="input-group-text" id="phone">
+					<i class="bi bi-telephone-fill"></i>
+				</span>
+			  </div>
+			  <input type="text" class="form-control" placeholder="연락처" aria-describedby="phone">
+			</div>
+			<div class="row input-group mt-2" style="font-size-12;">
+				<div class="input-group-prepend">
+					<span class="input-group-text" id="text">
+						<i class="bi bi-pencil-fill"></i>
+					</span>
+				</div>
+				<textarea class="form-control" placeholder="상담내용을 적어주시면 연락드리겠습니다." aria-describedby="text" maxlength="250" style="resize:none;height:135px;"></textarea>
+			</div>
+			<div class="row input-group mt-2">
+				<div class="col-12 pl-0 pr-0">
+					<button class="btn w-100" style="background-color:#2C2925; color:#FFFFFF">상담신청</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<div class="row mt-3">
+	<div class="col-12 ml-0 mr-0" style="background-color:#acacac; height: 1px; flex: 1; margin:25px;"></div>
+</div>
+
+<!-- 현장 사진 영역 -->
+<div class="row mt-3">
+	<div class="col-12 p-0">
+		<div class="row">
+			<div class="col-sm-6 col-6" style="font-size:12; font-weight:bold">
+				<i class="bi bi-pin-angle-fill"></i>&nbsp현장사진
+			</div>
+			<div class="col-sm-6 col-6" style="text-align:right;">
+				<a href="{% url 'image:list' %}" style="color:#0067a3;">
+					More
+					<i class="bi bi-arrow-right-square-fill" style="color:#0067a3"></i>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="col-12 mt-3 p-0">
+		<div class="row">
+			{% if data_image.count < 8 %}
+				{% for image in data_image %}
+			<div class="col-sm-6 col-md-3 p-3">
+				<a href="{% url 'image:detail' pk=image.id %}" style="color:black;">
+				<img class="w-1" style="width:261px; height:261px;" src="{{ image.image_img.url }}" alt="../../media/images/test_image.png"/></a>
+			</div>
+				{% endfor %}
+			{% else %}
+				{% for image in data_image %}
+			<div class="col-sm-6 col-md-3 p-3">
+				<a href="{% url 'image:detail' pk=image.id %}" style="color:black;">
+				<img class="w-1" style="width:261px; height:261px;" src="{{ image.image_img.url }}"/></a>
+			</div>
+				{% endfor %}
+			{% endif %}
+
+		</div>
+	</div>
+</div>
+
+<div class="row mt-3">
+	<div class="col-12 ml-0 mr-0" style="background-color:#acacac; height: 1px; flex: 1; margin:25px;"></div>
+</div>
+
+<!-- 고객센터 전화번호 & 오시는길 -->
+<div class="row mt-3">
+	<div class="col-sm-12 col-md-6 mt-2" style="font-family:맑은 고딕;">
+		<div class="row" style="font-size:12; font-weight:bold;">
+			<i class="bi bi-pin-angle-fill"></i>&nbsp고객센터
+		</div>
+		<div class="row">
+			<div class="col-12" style="color:#ff7f00;font-size:36px;font-weight:bold;text-align:center;height:215px;padding-top:80px;">1599-5866</div>
+		</div>
+		<div class="row mt-2">
+		▣ 회사명	더카탁송<br>
+		▣ TEL	1599-5866<br>
+		▣ FAX	02) 2692-3654<br>
+		▣ 주소	서울 구로구 경인로55길 58, 구로밸리온 1005호
+		</div>
+	</div>
+	<div class="col-sm-12 col-md-6 mt-2" style="font-family:맑은 고딕;">
+		<div class="row" style="font-size:12; font-weight:bold">
+			<i class="bi bi-pin-angle-fill"></i>&nbsp오시는길
+		</div>
+		<div class="row mt-2">
+			<img class="w-100" src="../../media/images/map.png" alt="No Image"/>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="col-sm-9 col-md-8 pl-0" style="text-align:left;font-weight:bold;">
+    <i class="bi bi-pin-angle-fill"></i>&nbsp사례 등록
+</div>
+<div class="row mt-2">
+    <div class="col-12">
+        <form method="post" action="/image/create/" enctype="multipart/form-data">
+        {% csrf_token %}
+  <p>
+    <label for="id_author">Author:</label>
+    <select name="author" required="" id="id_author">
+    <option value="1">{{user.username}}</option>
+    </select>
+  </p>
+  <p>
+    <label for="id_image_img">Image img:</label>
+    <input type="file" name="image_img" accept="image/*" id="id_image_img" multiple>
+  </p>
+  <p>
+    <label for="id_title">Title:</label>
+    <textarea name="title" cols="40" rows="10" id="id_title"></textarea>
+  </p>
+  <p>
+    <label for="id_text">Text:</label>
+    <textarea name="text" cols="40" rows="10" required="" id="id_text"></textarea>
+  </p>
+    <input type="submit" value="create" class="btn btn-info">
+    </form>
+    </div>
+</div>
+{% endblock %}

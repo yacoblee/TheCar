@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <title>더카탁송 1599-5866</title>
+</head>
+
+<!-- Navbar 높이만큼 margin-top:50px; -->
+<body style="margin-top:50px;">
+    <!-- Header -->
+    <header class="header">
+        <!-- Icons -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-sm navbar-dark fixed-top" style="background-color:#2C2925;">
+            <a class="navbar-brand" href="/">
+                <span style="color:#FFFFFF">더카탁송 </span>
+                <span style="color:#FF7F00">1599-5866</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#NavToggler" aria-expanded="false" aria-controls="NavToggler">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="NavToggler">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">회사소개</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'image:list' %}">로드탁송</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">현장사진</a>
+                    </li>
+                    <!-- Login & Logout -->
+                    <li class="nav-item">
+                        {% if user.is_authenticated %}
+                        <a class="nav-link" href="{% url 'user:logout' %}">Logout</a>
+                        {% else %}
+                        <a class="nav-link" href="{% url 'user:login' %}">Login</a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Background Images -->
+        <div class="row m-0 p-0">
+            <div class="col-sm-12 p-0">
+                <div id="carouselSlidesOnly" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img class="d-block w-100" src="/media/images/car1.png" alt="No Image"/>
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="/media/images/car2.png" alt="No Image"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container mt-4 mb-4">
+        <div class="row" style="min-height:800px;">
+            <div class="col-sm-12">
+            {% block content %}
+            {% endblock %}
+
+            {% block pagination %}
+            {% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="row m-0" style="background-color:#3E3E3E">
+            <div class="col-sm-12"><br></div>
+        </div>
+        <div class="row m-0" style="background-color:#2C2925; color:#6f6f6f; font-size:12px;">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-7 p-4">
+                회사명 : 더카탁송
+                대표 : 김 대 현<br>
+                주소 : 서울 구로구 경인로55길 58, 구로밸리온 1005호<br>
+                TEL : 1599-5866
+                FAX : 02) 2692-3654<br>
+                고객지원 : 010-4563-1377
+                사업자번호 : 000-00-00000<br>
+                Copyrightⓒ by arsyux, yacobleee
+                All rights reserved.<br>
+                WebMaster: arsyux@gmail.com yacobleee@naver.com
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+    </footer>
+
+    <!-- jquery -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+</body>
+</html>

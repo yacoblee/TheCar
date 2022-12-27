@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load mathfilters %}
+
+{% block content %}
+
+<div class="col-sm-9 col-md-8 pl-0" style="text-align:left;font-weight:bold;">
+    <i class="bi bi-pin-angle-fill"></i>&nbsp공지사항
+</div>
+<div class="row mt-3">
+
+        <table class="table">
+            <thead>
+                <th class="col">순번</th>
+                <th class="col">제목</th>
+                <th class="col">작성자</th>
+                <th class="col">날짜</th>
+            </thead>
+            <tbody>
+                {% if object_list.count >= 10 %}
+                    {% for info in object_list %}
+                    <tr>
+                        <td scope="row">{{ info.id }}</td>
+                        <th><a href="{% url 'info:detail' pk=info.id %}" style="color:black;">{{ info.title }}</a></th>
+                        <td>{{ info.author }}</td>
+                        <td>{{ info.created|date:'Y-m-d H:i' }}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <!-- 데이터 10개 미만일 경우-->
+                    {% for info in object_list %}
+                        <tr>
+                            <td scope="row">{{ info.id }}</td>
+                            <th><a href="{% url 'info:detail' pk=info.id %}" style="color:black;">{{ info.title }}</a></th>
+                            <td>{{ info.author }}</td>
+                            <td>{{ info.created|date:'Y-m-d H:i' }}</td>
+                        </tr>
+                    {% endfor %}
+                    {% with val=-1|mul:object_list.count|add:10 %}
+                    {% for i in "x"|rjust:val%}
+                        <tr style="height:49.5px">
+                            <td scope="row"></td>
+                            <th></th>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    {% endfor %}
+                    {% endwith %}
+                {% endif %}
+            </tbody>
+        </table>
+        <div class="row mt-1">
+            <div class="col-sm-10 col-md-8">
+                {{ info.title }}
+            </div>
+        </div>
+
+</div>
+{% if user.is_authenticated %}
+<div class="row">
+    <div class="col-sm-12">
+        <a class="btn btn-info" href="{% url 'info:create' %}">새글쓰기</a>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
+
+{% block pagination %}
+    {% if is_paginated %}
+    <div class="row">
+        <div class="col-sm-0 col-md-2"></div>
+        <div class="col-sm-12 col-md-8">
+            <nav>
+                <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1" style="color:#696969;">Previous</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                    </li>
+                {% endif %}
+
+                {% for object in page_obj.paginator.page_range %}
+                    <li class="page-item {% if page_obj.number == forloop.counter %} disabled{% endif %}">
+                        <a class="page-link" href="{{ request.path }}?page={{ forloop.counter }}" style="color:#696969;">{{ forloop.counter }}</a>
+                    </li>
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}" style="color:#696969;">Next</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                {% endif %}
+              </ul>
+            </nav>
+        </div>
+        <div class="col-sm-0 col-md-2"></div>
+    </div>
+    {% endif %}
+{% endblock %}

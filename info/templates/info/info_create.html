@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="col-sm-9 col-md-8 pl-0" style="text-align:left;font-weight:bold;">
+    <i class="bi bi-pin-angle-fill"></i>&nbsp공지사항 작성
+</div>
+<!--
+<div class="row mt-2">
+    <div class="col-12">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <div class="row justify-content-center">
+                <input type="submit" value="작성하기" class="btn btn-info">
+            </div>
+        </form>
+    </div>
+</div>
+-->
+<form method="post">
+    {% csrf_token %}
+    <p>
+        <label for="id_author">작성자</label>
+        <select class="form-control" name="author" required="" id="id_author">
+            <option value="{{ user.id }}">{{ user.username }}</option>
+        </select>
+    </p>
+    <p>
+      <label for="id_title">제목</label>
+      <textarea class="form-control" name="title" cols="40" rows="1" required="" id="id_title" style="resizable=False"></textarea>
+    </p>
+    <p>
+        <label for="id_text">내용</label>
+        <textarea class="form-control" name="text" cols="40" rows="10" required="" id="id_text"></textarea>
+    </p>
+    <div class="row justify-content-center">
+        <input type="submit" value="작성하기" class="btn btn-info">
+    </div>
+</form>
+
+{% endblock %}

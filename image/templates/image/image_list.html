@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- 문구 -->
+<div class="row mt-3">
+	<div class="col-4 ml-0" style="background-color:#acacac; height: 1px; flex: 1; margin:25px;"></div>
+	<div class="col-4 " style="text-align:center;">
+		<span style="font-family:맑은 고딕; font-size: 32px; font-weight:bold;">현장 사진</span>
+	</div>
+	<div class="col-4 mr-0" style="background-color:#acacac; height: 1px; flex: 10; margin:25px;"></div>
+</div>
+
+
+<!-- 현장 사진 그리드 * 12 -->
+<div class="row mt-3">
+	<div class="col-12 p-0">
+		<div class="row">
+            {% for list in page_obj %}
+			<div class="col-sm-6 col-md-3 p-3">
+                   <p><a href="{% url 'image:detail' pk=list.pk %}">
+                       <img class="w-1" style="width:261px; height:261px;" src="{{ list.image_img.url }}" alt="../media/images/no_image.png"/>{{list.title}}</a></p>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+
+<div class="row">
+    <div class="col-12 m-0" style="background-color:#acacac; height: 1px; flex: 1; margin:20px;"></div>
+</div>
+
+<div class="container">
+    <div class="row justify-content-end m-3">
+        <div class="col-0">
+            <li class="page-item">
+            <a href="create" class="page-link outline-dark" name="create">새글작성</a>
+            </li>
+        </div>
+    </div>
+</div>
+
+
+<style>
+.page-link {
+  color: #000;
+  background-color: #fff;
+  border: 1px solid #ccc;
+}
+.page-item.active .page-link {
+ z-index: 1;
+ color: #555;
+ font-weight:bold;
+ background-color: #f1f1f1;
+ border-color: #ccc;
+
+}
+.page-link:focus, .page-link:hover {
+  color: #000;
+  background-color: #fafafa;
+  border-color: #ccc;
+}
+</style>
+{% endblock %}
+
+{% block pagination %}
+    {% if is_paginated %}
+        <!- 페이지 넘기기 ->
+    <div class="row">
+        <div class="col-sm-0 col-md-2"></div>
+        <div class="col-sm-12 col-md-8">
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center p-2">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="{% url 'image:list' %}?page={{ page_obj.previous_page_number }}" tabindex="-1">&laquo;</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1">&laquo;</a>
+                    </li>
+                {% endif %}
+
+                {% for object in page_obj.paginator.page_range %}
+                    <li class="page-item {% if page_obj.number == forloop.counter %} disabled{% endif %}">
+                        <a class="page-link" href="{{ request.path }}?page={{ forloop.counter }}">{{ forloop.counter }}</a>
+                    </li>
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="{% url 'image:list' %}?page={{ page_obj.next_page_number }}" aria-label="Next">&raquo;</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">&raquo;</a>
+                    </li>
+                {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}
