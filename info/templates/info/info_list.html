@@ -8,29 +8,31 @@
 </div>
 <div class="row mt-3">
 
-        <table class="table">
+        <table style="width:100%" class="table">
             <thead>
-                <th class="col">순번</th>
-                <th class="col">제목</th>
-                <th class="col">작성자</th>
-                <th class="col">날짜</th>
+                <th style="width:10%" class="col">순번</th>
+                <th style="width:60%" class="col">제목</th>
+                <th style="width:10%" class="col">작성자</th>
+                <th style="width:20% text-center" class="col">날짜</th>
             </thead>
             <tbody>
                 {% if object_list.count >= 10 %}
                     {% for info in object_list %}
                     <tr>
                         <td scope="row">{{ info.id }}</td>
-                        <th><a href="{% url 'info:detail' pk=info.id %}" style="color:black;">{{ info.title }}</a></th>
+                        <td><a href="{% url 'info:detail' pk=info.id %}" style="color:black;">{{ info.title }}</a></td>
                         <td>{{ info.author }}</td>
                         <td>{{ info.created|date:'Y-m-d H:i' }}</td>
+
                     </tr>
+
                     {% endfor %}
                 {% else %}
                     <!-- 데이터 10개 미만일 경우-->
                     {% for info in object_list %}
                         <tr>
                             <td scope="row">{{ info.id }}</td>
-                            <th><a href="{% url 'info:detail' pk=info.id %}" style="color:black;">{{ info.title }}</a></th>
+                            <td><a href="{% url 'info:detail' pk=info.id %}" style="color:black;">{{ info.title }}</a></td>
                             <td>{{ info.author }}</td>
                             <td>{{ info.created|date:'Y-m-d H:i' }}</td>
                         </tr>
@@ -39,7 +41,7 @@
                     {% for i in "x"|rjust:val%}
                         <tr style="height:49.5px">
                             <td scope="row"></td>
-                            <th></th>
+                            <td></td>
                             <td></td>
                             <td></td>
                         </tr>
@@ -53,7 +55,6 @@
                 {{ info.title }}
             </div>
         </div>
-
 </div>
 {% if user.is_authenticated %}
 <div class="row">
@@ -63,7 +64,6 @@
 </div>
 {% endif %}
 
-{% endblock %}
 
 {% block pagination %}
     {% if is_paginated %}
@@ -104,3 +104,23 @@
     </div>
     {% endif %}
 {% endblock %}
+
+<!--
+$(document).ready(function () {
+    var table = $('#example').DataTable({
+        columnDefs: [
+            {
+                targets: -1,
+                data: null,
+                defaultContent: '<button>Click!</button>',
+            },
+        ],
+    });
+
+    $('#example tbody').on('click', 'button', function () {
+        var data = table.row($(this).parents('tr')).data();
+        alert(data[0] + "'s salary is: " + data[5]);
+    });
+});
+{% endblock %}
+-->

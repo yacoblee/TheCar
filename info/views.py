@@ -24,12 +24,12 @@ class InfoDetailView(DetailView):
 
 class InfoUpdateView(UpdateView):
     model = Info
-    fields = ['site_name', 'url']
+    fields = ['title', 'text']
     template_name_suffix = '_update'
-
+    success_url = reverse_lazy('info:list')
 
 class InfoDeleteView(DeleteView):
     model = Info
-    success_url = reverse_lazy('list')
-
+    success_url = reverse_lazy('info:list')
+    template_name = 'info/info_delete.html'
 
