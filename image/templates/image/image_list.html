@@ -3,7 +3,7 @@
 {% block content %}
 
 <!-- 문구 -->
-<div class="row mt-3">
+<div class="row mt-3" xmlns="http://www.w3.org/1999/html">
 	<div class="col-4 ml-0" style="background-color:#acacac; height: 1px; flex: 1; margin:25px;"></div>
 	<div class="col-4 " style="text-align:center;">
 		<span style="font-family:맑은 고딕; font-size: 32px; font-weight:bold;">현장 사진</span>
@@ -13,45 +13,53 @@
 
 
 <!-- 현장 사진 그리드 * 12 -->
+<div class ="container" >
 <div class="row mt-3">
-	<div class="col-12 p-0">
-		<div class="row">
-
-        {% if page_obj.count >= 10 %}
-            {% for list in page_obj %}
-			<div class="col-sm-6 col-md-3 p-3">
-                   <p><a href="{% url 'image:detail' pk=list.pk %}">
-                       <img class="w-1" style="width:261px; height:261px;" src="{{ list.image_img.url }}" alt="../media/images/no_image.png"/>{{list.title}}</a></p>
-			</div>
-            <br>
-            {% endfor %}
-        {% else %}
-            <!-- 데이터가 10개 미만일 경우 -->
-            {% for list in page_obj %}
-                <div class="col-sm-6 col-md-3 p-3">
+		<table class="table">
+        <tbody>
+            {% if object_list.count >= 12 %}
+            {% for list in object_list %}
+            <div class = "row">
+                <div class="col-md-3 p-1">
                        <p><a href="{% url 'image:detail' pk=list.pk %}">
                            <img class="w-1" style="width:261px; height:261px;" src="{{ list.image_img.url }}" alt="../media/images/no_image.png"/>{{list.title}}</a></p>
                 </div>
-            <br>
+            </div>
             {% endfor %}
-            {% with val=-1|mul:page_obj.count|add:10 %}
+        {% else %}
+            <!-- 데이터가 12개 미만일 경우 -->
+
+            {% for list in object_list %}
+            <div class = "row">
+                <div class="col-md-3 p-1">
+                       <p><a href="{% url 'image:detail' pk=list.pk %}">
+                           <img class="w-1" style="width:261px; height:261px;" src="{{ list.image_img.url }}" alt="../media/images/no_image.png"/>{{list.title}}</a></p>
+                </div>
+            </div>
+            {% endfor %}
+
+            {% with val=-1|mul:object_list.count|add:12 %}
             {% for i in "val" %}
-                <div class="col-sm-6 col-md-3 p-3">
+            <div class = "row">
+                <div class="col-md-3 p-2">
                        <img class="w-1" style="width:261px; height:261px;" src="../media/images/no_image.png" /></p>
 			    </div>
-            <br>
+            </div>
             {% endfor %}
             {% endwith %}
         {% endif %}
-		</div>
-	</div>
+            </tbody>
+	</table>
 </div>
+</div>
+
+
 
 <div class="row">
     <div class="col-12 m-0" style="background-color:#acacac; height: 1px; flex: 1; margin:20px;"></div>
 </div>
 
-<div class="container">
+{% if user.is_authenticated %}
     <div class="row justify-content-end m-3">
         <div class="col-0">
             <li class="page-item">
@@ -59,7 +67,7 @@
             </li>
         </div>
     </div>
-</div>
+{% endif %}
 
 
 <style>
@@ -83,13 +91,9 @@
 }
 </style>
 {% endblock %}
-{% if user.is_authenticated %}
-<div class="row">
-    <div class="col-sm-12">
-        <a class="btn btn-info" href="{% url 'image:create' %}">새글쓰기</a>
-    </div>
-</div>
-{% endif %}
+
+
+
 
 {% block pagination %}
     {% if is_paginated %}
