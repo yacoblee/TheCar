@@ -23,7 +23,6 @@
                         <td><a href="{% url 'info:detail' pk=info.id %}" style="color:black;">{{ info.title }}</a></td>
                         <td>{{ info.author }}</td>
                         <td>{{ info.created|date:'Y-m-d H:i' }}</td>
-
                     </tr>
                     {% endfor %}
                 {% else %}
@@ -122,4 +121,3 @@ $(document).ready(function () {
     });
 });
 {% endblock %}
--->

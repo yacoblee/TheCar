@@ -20,9 +20,10 @@
             {% if object_list.count >= 12 %}
             {% for list in object_list %}
             <div class = "row">
-                <div class="col-md-3 p-1">
-                       <p><a href="{% url 'image:detail' pk=list.pk %}">
-                           <img class="w-1" style="width:261px; height:261px;" src="{{ list.image_img.url }}" alt="../media/images/no_image.png"/>{{list.title}}</a></p>
+                <div class="col-xs-3 col-md-3 m-1">
+                       <a href="{% url 'image:detail' pk=list.pk %}">
+                           <img class="w-1" style="width:261px; height:261px;" src="{{ list.image_img.url }}" alt="../media/images/no_image.png"/></a>
+                    <div class="col-2 text-truncate">{{list.title}}</div>
                 </div>
             </div>
             {% endfor %}
@@ -31,18 +32,21 @@
 
             {% for list in object_list %}
             <div class = "row">
-                <div class="col-md-3 p-1">
-                       <p><a href="{% url 'image:detail' pk=list.pk %}">
-                           <img class="w-1" style="width:261px; height:261px;" src="{{ list.image_img.url }}" alt="../media/images/no_image.png"/>{{list.title}}</a></p>
+                <div class="col-xs-3 col-md-3 m-1">
+                       <a href="{% url 'image:detail' pk=list.pk %}">
+                           <img class="w-1" style="width:261px; height:261px;" src="{{ list.image_img.url }}" alt="../media/images/no_image.png"/></a>
+                    <div class="text-truncate" style="max-width: 200px;"><p>{{list.title}}</p></div>
                 </div>
             </div>
             {% endfor %}
 
             {% with val=-1|mul:object_list.count|add:12 %}
-            {% for i in "val" %}
+           {% for i in "x"|rjust:val%}
+
             <div class = "row">
-                <div class="col-md-3 p-2">
-                       <img class="w-1" style="width:261px; height:261px;" src="../media/images/no_image.png" /></p>
+                <th>{{val.count}}</th>
+                <div class="col-xs-3 col-md-3 m-1">
+                      <p> <img class="w-1" style="width:261px; height:261px;" src="../media/images/no_image.png" /></p>
 			    </div>
             </div>
             {% endfor %}
@@ -91,7 +95,6 @@
 }
 </style>
 {% endblock %}
-
 
 
 
