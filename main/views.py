@@ -17,3 +17,6 @@ def register(request):
         data_info = info.views.InfoListView.model.objects.all().order_by('-id')[:10]
 
     return render(request, 'main/main.html', {'data_info': data_info, 'data_image': data_image})
+
+def company(request):
+    return render(request, 'main/company.html', {})
